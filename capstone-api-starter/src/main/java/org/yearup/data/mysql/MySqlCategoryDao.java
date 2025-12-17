@@ -78,12 +78,12 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
                 if(generatedKeys.next()){
                     int id = generatedKeys.getInt(1);
                     category.setCategoryId(id);
-                    return category;
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return category;
     }
 
     @Override
@@ -129,7 +129,6 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
             setName(name);
             setDescription(description);
         }};
-
         return category;
     }
 
