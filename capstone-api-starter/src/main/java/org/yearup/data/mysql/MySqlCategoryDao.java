@@ -6,10 +6,7 @@ import org.yearup.data.CategoryDao;
 import org.yearup.models.Category;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,22 +40,23 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
 
     @Override
     public Category getById(int categoryId){
+        Category category = new Category();
         try (Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement(
                         "SELECT name, description FROM categories WHERE category_id = ?")
         ) {
             statement.setInt(1, categoryId);
             try (ResultSet resultSet = statement.executeQuery()) {
-                Category category = new Category();
-                category.setCategoryId(categoryId);
-                category.setName(resultSet.getString("name"));
-                category.setDescription(resultSet.getString("description"));
-                return category;
-
+               if(resultSet.next()){
+                   category.setCategoryId(categoryId);
+                   category.setName(resultSet.getString("name"));
+                   category.setDescription(resultSet.getString("description"));
+               }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return category;
     }
 
 
@@ -68,7 +66,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(
                      "INSERT INTO categories (name, description) " +
-                             "VALUES (?, ?);")
+                             "VALUES (?, ?);", Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setInt(1, category.getCategoryId());
             statement.setString(2, category.getName());
@@ -91,7 +89,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(
-                     "UPDATE categories SET name = ?, description = ?" +
+                     "UPDATE categories SET name = ?, description = ? " +
                              "WHERE category_id = ?")
         ) {
             statement.setString(1, category.getName());
@@ -108,7 +106,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(
-                     "Delete categories Where category_id = ?;")
+                     "Delete From categories Where category_id = ?;")
         ) {
             statement.setInt(1, categoryId);
             statement.executeUpdate();
