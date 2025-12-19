@@ -42,7 +42,7 @@ JWT Authentication
 
 MySQL
 
-Postman
+Insomnia
 
 ✨ Implemented Features
 Category Management (Phase 1)
