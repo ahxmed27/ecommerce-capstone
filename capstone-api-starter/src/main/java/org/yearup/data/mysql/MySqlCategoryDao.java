@@ -22,11 +22,11 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     @Override
     public List<Category> getAllCategories(){
         ArrayList<Category> list = new ArrayList<>();
-        Category category = new Category();
         try(Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM categories");
             ResultSet resultSet = statement.executeQuery()){
             while(resultSet.next()){
+                Category category = new Category();
                 category.setCategoryId(resultSet.getInt("category_id"));
                 category.setName(resultSet.getString("name"));
                 category.setDescription(resultSet.getString("description"));
@@ -68,8 +68,8 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
                      "INSERT INTO categories (name, description) " +
                              "VALUES (?, ?);", Statement.RETURN_GENERATED_KEYS)
         ) {
-            statement.setInt(1, category.getCategoryId());
-            statement.setString(2, category.getName());
+            statement.setString(1, category.getName());
+            statement.setString(2, category.getDescription());
 
             statement.executeUpdate();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
