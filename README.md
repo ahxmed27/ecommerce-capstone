@@ -109,3 +109,16 @@ Verified category CRUD functionality
 Validated corrected product search behavior
 
 Confirmed product updates no longer create duplicate records
+
+Screenshots of application and Insomnia Testing
+<img width="2017" height="1143" alt="image" src="https://github.com/user-attachments/assets/edd5b08c-dba2-4a9a-beba-04a8e50727db" />
+
+<img width="1891" height="853" alt="image" src="https://github.com/user-attachments/assets/a0de7984-3f4f-4eba-998b-8c884719ae73" />
+
+
+<img width="2000" height="984" alt="image" src="https://github.com/user-attachments/assets/468025ff-3f9b-41de-9bbb-10d08b0b6126" />
+
+
+<img width="2000" height="985" alt="image" src="https://github.com/user-attachments/assets/22ec1bd9-968f-49e5-8a48-3a33b33a97f3" />
+
+
